@@ -46,9 +46,6 @@ def _ng_proto_module_srcs_impl(ctx):
     file = ctx.actions.declare_file(filename)
     outFiles.append(file)
 
-  if ctx.attr.ng_module_name:
-    outFiles.append(ctx.actions.declare_file(ctx.attr.ng_module_name + "_ng_grpc.module.ts"))
-
   outDir = ctx.bin_dir.path
   if pkgLabel:
     outDir += '/' + pkgLabel
@@ -57,11 +54,10 @@ def _ng_proto_module_srcs_impl(ctx):
   protocArgs.append("--plugin=protoc-gen-angular={}".format(
     ctx.executable.plugin.path
   ))
-  protocArgs.append("--angular_out=grpc-web={},web_import_prefix={},grpc_web_import_prefix={},module_name={}:{}".format(
+  protocArgs.append("--angular_out=grpc-web={},web_import_prefix={},grpc_web_import_prefix={}:{}".format(
     ctx.attr.grpc_web_implementation,
     ctx.attr.web_import_prefix,
     ctx.attr.grpc_web_import_prefix,
-    ctx.attr.ng_module_name,
     outDir,
   ))
 
@@ -107,10 +103,6 @@ ng_proto_module_srcs = rule(
       values = ["google", "improbable-eng"],
       mandatory = True,
     ),
-    "ng_module_name": attr.string(
-      doc = "Module name used to generate <ng_module_name>_ng_grpc.module.ts file that provides all services",
-      mandatory = False,
-    ),
     "deps": attr.label_list(doc = "proto_library targets"),
     "protoc": attr.label(
       default = Label("@com_google_protobuf//:protoc"),
@@ -129,7 +121,6 @@ def ng_proto_module(
   name,
   srcs = [],
   deps = [],
-  ng_module_name = "",
   grpc_web_implementation = None,
   web_import_prefix = None,
   grpc_web_import_prefix = None,
@@ -145,7 +136,6 @@ def ng_proto_module(
     deps = deps,
     protoc = protoc,
     plugin = plugin,
-    ng_module_name = ng_module_name,
     grpc_web_implementation = grpc_web_implementation,
     web_import_prefix = web_import_prefix,
     grpc_web_import_prefix = grpc_web_import_prefix,

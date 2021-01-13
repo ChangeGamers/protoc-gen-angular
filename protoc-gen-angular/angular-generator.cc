@@ -657,7 +657,7 @@ namespace {
 
     printCommentDoc<const ServiceDescriptor&>(printer, service);
 
-    printer.Print("@Injectable()\n");
+    printer.Print("@Injectable({providedIn: 'root'})\n");
     printer.Print(vars, "export class $service_name$ {\n\n");
 
     printer.Indent();
@@ -752,83 +752,6 @@ namespace {
   }
 }
 
-void PrintAngularModuleImports
-  ( Printer&                                 printer
-  , const vector<const ServiceDescriptor*>&  services
-  , AngularGrpcCodeGeneratorOptions&         options
-  )
-{
-  map<string, string> vars = {};
-
-  printer.Print(vars, "import { NgModule } from '@angular/core';\n\n");
-
-  map<string, vector<const ServiceDescriptor*>> fileToServiceDescriptorMap;
-
-  for(auto service : services) {
-    auto filename = service->file()->name();
-
-    auto it = fileToServiceDescriptorMap.find(filename);
-    if(it == fileToServiceDescriptorMap.end()) {
-      fileToServiceDescriptorMap.insert({filename, {}});
-      it = fileToServiceDescriptorMap.find(filename);
-    }
-
-    it->second.push_back(service);
-  }
-
-  for(auto pair : fileToServiceDescriptorMap) {
-    auto filename = pair.first;
-    auto fileServices = pair.second;
-
-    vars["import_path"] = removePathExtname(filename) + "_ng_grpc_pb";
-
-    printer.Print(vars, "import {\n");
-    printer.Indent();
-
-    for(auto service : fileServices) {
-      vars["service_name"] = service->name();
-      printer.Print(vars, "$service_name$,\n");
-    }
-
-    printer.Outdent();
-    printer.Print(vars, "} from './$import_path$';\n");
-  }
-
-  printer.PrintRaw("\n");
-}
-
-void PrintAngularModule
-  ( Printer&                                 printer
-  , const vector<const ServiceDescriptor*>&  services
-  , AngularGrpcCodeGeneratorOptions&         options
-  )
-{
-  assert(!options.moduleName.empty());
-
-  map<string, string> vars = {
-    {"module_name", options.moduleName}
-  };
-
-  printer.Print(vars, "@NgModule({\n");
-  printer.Indent();
-
-  printer.Print(vars, "providers: [\n");
-  printer.Indent();
-
-  for(auto service : services) {
-    
-    vars["service_name"] = service->name();
-    printer.Print(vars, "$service_name$,\n");
-  }
-
-  printer.Outdent();
-  printer.Print(vars, "],\n");
-
-  printer.Outdent();
-  printer.Print(vars, "})\n");
-  printer.Print(vars, "export class $module_name$ {\n}\n");
-}
-
 AngularGrpcCodeGenerator::AngularGrpcCodeGenerator() {}
 
 AngularGrpcCodeGenerator::~AngularGrpcCodeGenerator() {}
@@ -870,9 +793,6 @@ bool AngularGrpcCodeGenerator::GenerateAll
         services.push_back(service);
       }
     }
-
-    PrintAngularModuleImports(printer, services, options);
-    PrintAngularModule(printer, services, options);
   }
 
   return true;
