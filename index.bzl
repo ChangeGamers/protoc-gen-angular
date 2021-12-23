@@ -1,6 +1,5 @@
-load("@npm_angular_bazel//:index.bzl", "ng_module")
 load("@com_google_protobuf//:protobuf.bzl", "proto_gen")
-load("@npm_bazel_typescript//:index.bzl", "ts_library")
+load("@npm//@bazel/typescript:index.bzl", "ts_project")
 
 def _TsNgProtoOuts(srcs):
   ret = [s.path[:-len(".proto")] + "_ng_grpc_pb.ts" for s in srcs]
@@ -154,9 +153,10 @@ def ng_proto_module(
 
   ng_deps.extend(ts_deps)
 
-  ng_module(
+  ts_project(
     name = name,
     srcs = [":" + tsSrcsTargetName],
+    tsc = "@npm//@angular/compiler-cli/bin:ngc",
     deps = ng_deps,
     **kwargs
   )
