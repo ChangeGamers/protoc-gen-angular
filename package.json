@@ -6,9 +6,10 @@
   "directories": {
     "example": "examples"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@angular/compiler-cli": "9.1.13"
+  },
   "devDependencies": {
-    "@angular/compiler-cli": "9.1.13",
     "@bazel/karma": "~0.38.0",
     "@bazel/typescript": "4.6.1",
     "typescript": "^3.5.1"
