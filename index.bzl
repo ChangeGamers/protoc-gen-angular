@@ -156,7 +156,8 @@ def ng_proto_module(
   ts_library(
     name = name,
     srcs = [":" + tsSrcsTargetName],
+    compiler = "@npm//@angular/compiler-cli/bin:ngc",
     deps = ng_deps,
-    tsc = "@npm//@angular/compiler-cli/bin:ngc",
+    use_angular_plugin= True,
     **kwargs
   )
