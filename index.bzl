@@ -157,6 +157,6 @@ def ng_proto_module(
     name = name,
     srcs = [":" + tsSrcsTargetName],
     deps = ng_deps,
-    use_angular_plugin= True,
+    tsc = "@npm//@angular/compiler-cli/bin:ngc",
     **kwargs
   )
