@@ -575,7 +575,7 @@ namespace {
     for(auto& pair : fileToDescriptorMap) {
       auto filename = pair.first;
       auto descriptors = pair.second;
-      auto importPath = removePathExtname(filename) + "_pb";
+      auto importPath = removePathExtname(filename) + "_grpcjs_pb";
 
       map<string, string> vars = {
         {"import_prefix", options.webImportPrefix},
