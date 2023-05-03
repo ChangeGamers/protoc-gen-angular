@@ -1,18 +1,32 @@
 {
-  "name": "@grpc-gen/protoc-gen-angular",
-  "version": "0.4.0-2",
+  "name": "angular-grpc",
+  "version": "1.0.0",
+  "description": "",
   "main": "index.js",
-  "repository": "https://github.com/zaucy/protoc-gen-angular.git",
-  "author": "Ezekiel Warren",
-  "license": "MIT",
-  "bin": {
-    "protoc-gen-angular": "cli.js"
-  },
-  "scripts": {
-    "postinstall": "node download.js",
-    "test": "exit 0"
+  "directories": {
+    "example": "examples"
   },
   "dependencies": {
-    "progress-download": "^1.0.4"
-  }
+  },
+  "devDependencies": {
+    "@bazel/karma": "~0.38.0",
+    "@bazel/typescript": "4.6.1",
+    "typescript": "^3.5.1",
+    "@angular/compiler-cli": "9.1.13",
+    "@angular/compiler": "9.1.13"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "rebuild": "npm rebuild"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zaucy/protoc-gen-angular.git"
+  },
+  "author": "Ezekiel Warren",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zaucy/protoc-gen-angular/issues"
+  },
+  "homepage": "https://github.com/zaucy/protoc-gen-angular#readme"
 }

@@ -1,0 +1,14 @@
+cc_binary(
+	name = "protoc-gen-angular",
+	visibility = ["//visibility:public"],
+	srcs = [
+		"angular-generator-options.cc",
+		"angular-generator-options.hh",
+		"angular-generator.cc",
+		"angular-generator.hh",
+		"main.cc",
+	],
+	deps = [
+		"@com_google_protobuf//:protoc_lib",
+	],
+)
