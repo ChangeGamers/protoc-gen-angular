@@ -20,7 +20,7 @@ def _ng_proto_module_srcs_impl(ctx):
   pkgLabel = ctx.label.package
 
   for dep in ctx.attr.deps:
-    if ProtoInfo in dep.to_list():
+    if type(dep) == 'list' and dep[ProtoInfo]:
       protoInfo = dep[ProtoInfo]
       protoPaths = depset(transitive = [
         protoPaths,
