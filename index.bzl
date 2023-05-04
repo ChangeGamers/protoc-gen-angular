@@ -22,8 +22,7 @@ def _ng_proto_module_srcs_impl(ctx):
   print(ctx);
 
   for dep in ctx.attr.deps:
-    print(type(dep));
-    if dep[ProtoInfo]:
+    if ProtoInfo in dep:
       protoInfo = dep[ProtoInfo]
       protoPaths = depset(transitive = [
         protoPaths,
