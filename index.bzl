@@ -18,6 +18,8 @@ def _ng_proto_module_srcs_impl(ctx):
   protoSrcsRoots = []
 
   pkgLabel = ctx.label.package
+  print(ctx.attr.deps);
+  print(ctx);
 
   for dep in ctx.attr.deps:
     if type(dep) == 'list' and dep[ProtoInfo]:
