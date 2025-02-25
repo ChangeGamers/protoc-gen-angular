@@ -3,7 +3,8 @@
 
 using google::protobuf::compiler::PluginMain;
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[])
+{
   AngularGrpcCodeGenerator generator;
   PluginMain(argc, argv, &generator);
   return 0;
