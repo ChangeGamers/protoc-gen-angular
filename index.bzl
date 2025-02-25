@@ -157,7 +157,7 @@ def ng_proto_module(
     name = name,
     srcs = [":" + tsSrcsTargetName],
     deps = ng_deps,
-    use_angular_plugin= True,
+    use_angular_plugin= False,
     compiler = "//bazel/internal:tsc_wrapped_with_angular",
     **kwargs
   )
